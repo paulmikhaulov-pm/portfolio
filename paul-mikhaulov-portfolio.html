@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul Mikhaulov — Senior Project Manager Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#F0F1ED;
+    --panel:#FFFFFF;
+    --panel-2:#EAEBE5;
+    --paper:#1A1D1F;
+    --signal:#B6491C;
+    --signal-rgb:182,73,28;
+    --delivered:#157A56;
+    --delivered-rgb:21,122,86;
+    --muted:#5F635D;
+    --line:#DEE0D8;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+
+  :focus-visible{
+    outline:2px solid var(--signal);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ---------- layout shell ---------- */
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- sticky board nav ---------- */
+  .board-nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(240,241,237,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .board-nav-inner{
+    max-width:880px;
+    margin:0 auto;
+    padding:12px 28px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    overflow-x:auto;
+  }
+  .board-nav .who{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+    color:var(--paper);
+  }
+  .board-nav .chips{
+    display:flex;
+    gap:8px;
+    margin-left:auto;
+  }
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 11px;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .chip:hover, .chip.active{
+    color:var(--ink);
+    background:var(--paper);
+    border-color:var(--paper);
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:88px 0 56px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--signal);
+    margin:0 0 18px;
+  }
+  .eyebrow::before{
+    content:"●";
+    font-size:9px;
+    margin-right:8px;
+    position:relative;
+    top:-2px;
+  }
+  h1.name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:clamp(40px, 7vw, 68px);
+    line-height:1.02;
+    margin:0 0 10px;
+    letter-spacing:-0.01em;
+  }
+  .role-line{
+    font-size:18px;
+    color:var(--muted);
+    margin:0 0 28px;
+    max-width:560px;
+  }
+  .role-line strong{color:var(--paper); font-weight:500;}
+
+  .kpi-strip{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    margin-top:36px;
+    background:var(--panel);
+  }
+  .kpi{
+    padding:18px 16px;
+    border-right:1px solid var(--line);
+  }
+  .kpi:last-child{border-right:none;}
+  .kpi .num{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:26px;
+    font-weight:600;
+    color:var(--paper);
+    display:block;
+  }
+  .kpi .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:block;
+    margin-top:4px;
+  }
+
+  /* ---------- section label ---------- */
+  .section-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:64px 0 18px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .section-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* ---------- ticket card ---------- */
+  .ticket{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin-bottom:22px;
+    overflow:hidden;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+    box-shadow:0 1px 2px rgba(20,20,15,0.03), 0 10px 24px -16px rgba(20,20,15,0.10);
+  }
+  .ticket.in-view{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .ticket-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 22px;
+    border-bottom:1px solid var(--line);
+    background:var(--panel-2);
+    flex-wrap:wrap;
+  }
+  .ticket-id{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    letter-spacing:0.02em;
+  }
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:4px 10px 4px 8px;
+    border-radius:999px;
+  }
+  .status .dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .status.active{ color:var(--signal); background:rgba(var(--signal-rgb),0.12); }
+  .status.active .dot{ background:var(--signal); box-shadow:0 0 0 0 rgba(var(--signal-rgb),0.55); animation:pulse 2s infinite; }
+  .status.shipped{ color:var(--delivered); background:rgba(var(--delivered-rgb),0.12); }
+  .status.shipped .dot{ background:var(--delivered); }
+  .status.open{ color:var(--muted); background:transparent; border:1px solid var(--line); }
+  .status.open .dot{ border:1px solid var(--muted); background:transparent; }
+
+  @media (prefers-reduced-motion: no-preference){
+    @keyframes pulse{
+      0%{ box-shadow:0 0 0 0 rgba(var(--signal-rgb),0.45); }
+      70%{ box-shadow:0 0 0 6px rgba(var(--signal-rgb),0); }
+      100%{ box-shadow:0 0 0 0 rgba(var(--signal-rgb),0); }
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticket{ transition:none; opacity:1; transform:none; }
+    .status .dot{ animation:none !important; }
+  }
+
+  .dates{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--muted);
+    margin-left:auto;
+  }
+
+  .ticket-body{ padding:24px 22px 22px; }
+  .ticket-body .company{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 6px;
+  }
+  .ticket-body h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:25px;
+    font-weight:600;
+    margin:0 0 6px;
+    line-height:1.2;
+  }
+  .ticket-body .role{
+    font-size:14px;
+    color:var(--signal);
+    margin:0 0 16px;
+    font-weight:500;
+  }
+  .ticket-body p.narrative{
+    font-size:15px;
+    color:#3A3D3F;
+    max-width:640px;
+    margin:0 0 22px;
+  }
+
+  .stats-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .stat{
+    background:var(--panel);
+    padding:14px 14px;
+  }
+  .stat .v{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:20px;
+    font-weight:600;
+    color:var(--paper);
+    display:block;
+  }
+  .stat .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:block;
+    margin-top:3px;
+  }
+
+  .changelog-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 10px;
+  }
+  .changelog{
+    list-style:none;
+    margin:0 0 22px;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .changelog li{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+    color:#2C3733;
+    padding-left:20px;
+    position:relative;
+    line-height:1.5;
+  }
+  .changelog li::before{
+    content:"+";
+    position:absolute;
+    left:0;
+    color:var(--delivered);
+    font-weight:600;
+  }
+
+  .tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.02em;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:5px 12px;
+  }
+
+  /* ---------- linked resources (site + social icons) ---------- */
+  .linked-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin:0 0 22px;
+  }
+  .linked-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .linked-site{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--paper);
+    text-decoration:none;
+    border-bottom:1px solid var(--line);
+    padding-bottom:1px;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .linked-site:hover{ color:var(--signal); border-color:var(--signal); }
+  .linked-site .arrow{ font-size:11px; }
+  .linked-icons{ display:inline-flex; gap:8px; }
+  .icon-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:30px;
+    height:30px;
+    border:1px solid var(--line);
+    border-radius:50%;
+    color:var(--muted);
+    transition:color .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .icon-btn:hover, .icon-btn:focus-visible{
+    color:var(--panel);
+    background:var(--paper);
+    border-color:var(--paper);
+  }
+
+  /* ---------- flagship delivery sub-tickets ---------- */
+  .subtickets{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:0 0 22px;
+  }
+  .subticket{
+    display:block;
+    text-decoration:none;
+    color:inherit;
+    border:1px solid var(--line);
+    border-left:3px solid var(--signal);
+    border-radius:8px;
+    background:var(--ink);
+    padding:14px 16px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .subticket:hover, .subticket:focus-visible{
+    border-left-color:var(--delivered);
+    background:var(--panel-2);
+  }
+  .subticket-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .subticket-name{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--paper);
+  }
+  .subticket-name .arrow{
+    font-size:12px;
+    color:var(--muted);
+    margin-left:4px;
+  }
+  .subticket-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--muted);
+    white-space:nowrap;
+  }
+  .subticket-desc{
+    margin:0;
+    font-size:13.5px;
+    color:#3A3D3F;
+    line-height:1.55;
+  }
+
+  /* ---------- footer ticket ---------- */
+  .footer-ticket{ margin-top:64px; margin-bottom:80px; }
+  .footer-ticket .ticket-body{ padding-top:24px; }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px 28px;
+    margin-top:20px;
+  }
+  .contact-grid .c-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:3px;
+    display:block;
+  }
+  .contact-grid .c-val{
+    font-size:14.5px;
+    color:var(--paper);
+  }
+  .contact-grid a.c-val{ text-decoration:none; border-bottom:1px solid var(--line); }
+  .contact-grid a.c-val:hover{ border-color:var(--signal); color:var(--signal); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:680px){
+    .kpi-strip{ grid-template-columns:repeat(2, 1fr); }
+    .kpi:nth-child(2){ border-right:none; }
+    .kpi:nth-child(1), .kpi:nth-child(2){ border-bottom:1px solid var(--line); }
+    .contact-grid{ grid-template-columns:1fr; }
+    .board-nav .who{ display:none; }
+    .ticket-head{ flex-direction:column; align-items:flex-start; gap:8px; }
+    .dates{ margin-left:0; }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="board-nav">
+    <div class="board-nav-inner">
+      <span class="who mono">PM&nbsp;/&nbsp;PROJECT&nbsp;PORTFOLIO</span>
+      <div class="chips">
+        <a class="chip" href="#igm" data-chip>#PM-2024-IGM</a>
+        <a class="chip" href="#psg" data-chip>#PM-2021-PSG</a>
+        <a class="chip" href="#inw" data-chip>#PM-2023-INW</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <header class="hero">
+      <p class="eyebrow mono">SENIOR PROJECT MANAGER &nbsp;·&nbsp; SELECTED WORK</p>
+      <h1 class="name display">Paul<br>Mikhaulov</h1>
+      <p class="role-line">Seven years turning chaotic delivery into predictable releases — across <strong>iGaming</strong>, <strong>e-commerce</strong>, <strong>social media</strong>, <strong>mobile</strong>, <strong>SaaS</strong>, and <strong>ERP</strong>, for teams up to 22 people.</p>
+
+      <div class="kpi-strip">
+        <div class="kpi">
+          <span class="num display">7Y</span>
+          <span class="label">In delivery</span>
+        </div>
+        <div class="kpi">
+          <span class="num display">22</span>
+          <span class="label">Largest team led</span>
+        </div>
+        <div class="kpi">
+          <span class="num display">6+</span>
+          <span class="label">Core domains</span>
+        </div>
+        <div class="kpi">
+          <span class="num display">10+</span>
+          <span class="label">Projects launched 0→1</span>
+        </div>
+      </div>
+    </header>
+
+    <p class="section-label mono">Three cases, three kinds of pressure</p>
+
+    <!-- CASE 1 — NDA iGaming -->
+    <article class="ticket" id="igm">
+      <div class="ticket-head">
+        <span class="ticket-id">#PM-2024-IGM</span>
+        <span class="status active"><span class="dot"></span>Active</span>
+        <span class="dates">Jun 2024 — Jun 2026</span>
+      </div>
+      <div class="ticket-body">
+        <p class="company">NDA — iGaming</p>
+        <h3 class="display">Two new brands, zero room on compliance</h3>
+        <p class="role">Senior Project Manager</p>
+        <p class="narrative">Ran two delivery streams at once — an admin-panel microservice rebuild and brand launches — across a distributed team of 15 engineers. Took two new igaming brands from scope to go-live while every release stayed inside licensing, payments, and third-party provider constraints that don't flex.</p>
+
+        <div class="stats-row">
+          <div class="stat"><span class="v display">15</span><span class="k">Engineers led</span></div>
+          <div class="stat"><span class="v display">2</span><span class="k">Brands launched</span></div>
+          <div class="stat"><span class="v display">+25%</span><span class="k">On-time delivery</span></div>
+          <div class="stat"><span class="v display">−25%</span><span class="k">Incident rate</span></div>
+          <div class="stat"><span class="v display">+20–30%</span><span class="k">Release velocity</span></div>
+        </div>
+
+        <p class="changelog-label">Changelog</p>
+        <ul class="changelog">
+          <li>Launched 2 new igaming brands end-to-end, from scope definition to go-live</li>
+          <li>Improved on-time delivery 25% through a PMO framework and structured release planning</li>
+          <li>Cut incident and bug rate ~25% with igaming-specific risk mitigation practices</li>
+          <li>Accelerated release velocity 20–30% by scaling Agile across concurrent product streams</li>
+        </ul>
+
+        <div class="tags">
+          <span class="tag">Scrum</span><span class="tag">SAFe</span><span class="tag">OKR</span>
+          <span class="tag">Kanban</span><span class="tag">Risk mitigation</span><span class="tag">Compliance</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 2 — Paysenger -->
+    <article class="ticket" id="psg">
+      <div class="ticket-head">
+        <span class="ticket-id">#PM-2021-PSG</span>
+        <span class="status shipped"><span class="dot"></span>Shipped</span>
+        <span class="dates">Jun 2021 — May 2022, Jan — May 2023</span>
+      </div>
+      <div class="ticket-body">
+        <p class="company">Paysenger</p>
+        <h3 class="display">A creator social network, built from an empty repo</h3>
+        <p class="role">Agile Project Manager</p>
+        <p class="narrative">Built the Agile process from zero for a 22-engineer team split across five streams — Mobile, Web, Backend, CRM, DevOps — to ship a social network for creators on iOS, Android, and Web. Took the product from kickoff to MVP in 8 months and watched it grow to roughly 50,000 users.</p>
+
+        <div class="linked-row">
+          <span class="linked-label">Linked</span>
+          <a class="linked-site" href="https://paysenger.com/" target="_blank" rel="noopener">paysenger.com<span class="arrow">↗</span></a>
+          <span class="linked-icons">
+            <a class="icon-btn" href="https://play.google.com/store/apps/details?id=com.paysenger.androidapp" target="_blank" rel="noopener" aria-label="Get Paysenger on Google Play">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                <path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"></path>
+              </svg>
+            </a>
+            <a class="icon-btn" href="https://www.instagram.com/paysenger_com/" target="_blank" rel="noopener" aria-label="Paysenger on Instagram">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="5.5"></rect>
+                <circle cx="12" cy="12" r="3.6"></circle>
+                <circle cx="17.1" cy="6.9" r="0.6" fill="currentColor" stroke="none"></circle>
+              </svg>
+            </a>
+          </span>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat"><span class="v display">22+</span><span class="k">Engineers</span></div>
+          <div class="stat"><span class="v display">5</span><span class="k">Parallel streams</span></div>
+          <div class="stat"><span class="v display">8mo</span><span class="k">To MVP</span></div>
+          <div class="stat"><span class="v display">~50K</span><span class="k">Users post-launch</span></div>
+        </div>
+
+        <p class="changelog-label">Changelog</p>
+        <ul class="changelog">
+          <li>Built and scaled an Agile delivery framework from scratch across 5 cross-functional teams</li>
+          <li>Delivered MVP within 8 months of project kickoff</li>
+          <li>Grew the platform to ~50,000 users across iOS, Android, and Web</li>
+          <li>Coordinated parallel delivery across 5 streams with no critical delivery failures</li>
+        </ul>
+
+        <div class="tags">
+          <span class="tag">Scrum</span><span class="tag">Greenfield</span>
+          <span class="tag">Startup</span><span class="tag">Multi-platform</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 3 — Innowise -->
+    <article class="ticket" id="inw">
+      <div class="ticket-head">
+        <span class="ticket-id">#PM-2023-INW</span>
+        <span class="status shipped"><span class="dot"></span>Closed</span>
+        <span class="dates">May 2023 — Jun 2024</span>
+      </div>
+      <div class="ticket-body">
+        <p class="company">Innowise</p>
+        <h3 class="display">Nine projects, one P&amp;L view</h3>
+        <p class="role">Agile Project Manager</p>
+        <p class="narrative">Ran a portfolio of 3 to 5 concurrent e-commerce, mobile, and DevOps projects at once, for teams of 15+ engineers. Rebuilt the pre-sale process, introduced a new estimation methodology, and put PnL tracking in place where there had been none — then watched on-time delivery and project profitability move.</p>
+
+        <div class="stats-row">
+          <div class="stat"><span class="v display">9</span><span class="k">Projects delivered</span></div>
+          <div class="stat"><span class="v display">5</span><span class="k">Max concurrent</span></div>
+          <div class="stat"><span class="v display">+15%</span><span class="k">On-time delivery</span></div>
+          <div class="stat"><span class="v display">PnL</span><span class="k">Tracking introduced</span></div>
+        </div>
+
+        <p class="changelog-label">Changelog</p>
+        <ul class="changelog">
+          <li>Delivered 9 projects across e-commerce, mobile, and DevOps domains</li>
+          <li>Rebuilt the pre-sale and estimation process, improving project profitability</li>
+          <li>Introduced PnL tracking and budget control across the full portfolio</li>
+          <li>Improved on-time delivery 15% through governance and Agile standardisation</li>
+          <li>Introduced P3.express to streamline governance and cut management overhead</li>
+        </ul>
+
+        <p class="changelog-label">Flagship deliveries</p>
+        <div class="subtickets">
+          <a class="subticket" href="https://www.maschiogaspardo.com/" target="_blank" rel="noopener">
+            <div class="subticket-top">
+              <span class="subticket-name">Maschio Gaspardo<span class="arrow">↗</span></span>
+              <span class="subticket-tag">E-commerce · Magento 2</span>
+            </div>
+            <p class="subticket-desc">Owned delivery of the international storefront for this Italian manufacturer of tillage, seeding, and harvesting equipment — a Magento 2 platform spanning 20+ country storefronts and a multi-language catalog of hundreds of SKUs, tied to a dealer locator covering their global distribution network. The job was sequencing simultaneous market rollouts without engineering, merchandising, and localization stepping on each other.</p>
+          </a>
+          <a class="subticket" href="https://kkmp.tech/" target="_blank" rel="noopener">
+            <div class="subticket-top">
+              <span class="subticket-name">KKMP.Tech<span class="arrow">↗</span></span>
+              <span class="subticket-tag">LegalTech · SaaS</span>
+            </div>
+            <p class="subticket-desc">Managed delivery for this legal-tech product suite: FileHunter, a fast document-search engine for network storage and eDiscovery, and FileMaster, an on-premise eDMS with versioning, granular access control, and Active Directory integration. The core trade-off to manage was a security-first, on-premise architecture against a roadmap that kept adding AI-assisted document workflows.</p>
+          </a>
+        </div>
+
+        <div class="tags">
+          <span class="tag">Scrum</span><span class="tag">Kanban</span>
+          <span class="tag">P3.express</span><span class="tag">Portfolio mgmt</span><span class="tag">PnL</span>
+        </div>
+      </div>
+    </article>
+
+    <p class="section-label mono">Get in touch</p>
+
+    <article class="ticket footer-ticket" id="open">
+      <div class="ticket-head">
+        <span class="ticket-id">#PM-OPEN</span>
+        <span class="status open"><span class="dot"></span>Open</span>
+        <span class="dates">Warsaw, PL</span>
+      </div>
+      <div class="ticket-body">
+        <h3 class="display">Open to the next hard delivery problem</h3>
+        <p class="narrative">PSM I · PSPO I · SAFe Agilist · Kanban System Design — English C1, Polish A1, Russian native.</p>
+        <div class="contact-grid">
+          <div>
+            <span class="c-label">Email</span>
+            <a class="c-val" href="mailto:Paul.Mikhaulov@gmail.com">Paul.Mikhaulov@gmail.com</a>
+          </div>
+          <div>
+            <span class="c-label">Phone</span>
+            <span class="c-val">+48 572 576 604</span>
+          </div>
+          <div>
+            <span class="c-label">LinkedIn</span>
+            <a class="c-val" href="https://linkedin.com/in/paul-mikhaulov" target="_blank" rel="noopener">linkedin.com/in/paul-mikhaulov</a>
+          </div>
+          <div>
+            <span class="c-label">Location</span>
+            <span class="c-val">Warsaw, Poland</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+<script>
+  // reveal tickets on scroll
+  const tickets = document.querySelectorAll('.ticket');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    tickets.forEach(t=>io.observe(t));
+  } else {
+    tickets.forEach(t=>t.classList.add('in-view'));
+  }
+
+  // active chip highlighting
+  const chips = document.querySelectorAll('[data-chip]');
+  const sections = ['igm','psg','inw'].map(id=>document.getElementById(id));
+  if ('IntersectionObserver' in window){
+    const navIo = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          chips.forEach(c=>c.classList.remove('active'));
+          const match = document.querySelector('[data-chip][href="#'+entry.target.id+'"]');
+          if(match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    sections.forEach(s=> s && navIo.observe(s));
+  }
+</script>
+
+</body>
+</html>
