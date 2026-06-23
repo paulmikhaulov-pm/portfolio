@@ -366,7 +366,7 @@
   .linked-row{
     display:flex;
     align-items:center;
-    gap:14px;
+    gap:10px;
     flex-wrap:wrap;
     margin:0 0 22px;
   }
@@ -376,37 +376,30 @@
     letter-spacing:0.08em;
     text-transform:uppercase;
     color:var(--muted);
+    margin-right:4px;
   }
-  .linked-site{
+  .link-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
     font-family:'IBM Plex Mono', monospace;
     font-size:12.5px;
-    color:var(--paper);
+    font-weight:600;
+    color:var(--signal);
     text-decoration:none;
-    border-bottom:1px solid var(--line);
-    padding-bottom:1px;
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
-    transition:color .15s ease, border-color .15s ease;
+    background:rgba(var(--signal-rgb),0.09);
+    border:1px solid rgba(var(--signal-rgb),0.4);
+    border-radius:999px;
+    padding:8px 14px;
+    line-height:1;
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
   }
-  .linked-site:hover{ color:var(--signal); border-color:var(--signal); }
-  .linked-site .arrow{ font-size:11px; }
-  .linked-icons{ display:inline-flex; gap:8px; }
-  .icon-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    width:30px;
-    height:30px;
-    border:1px solid var(--line);
-    border-radius:50%;
-    color:var(--muted);
-    transition:color .15s ease, border-color .15s ease, background .15s ease;
-  }
-  .icon-btn:hover, .icon-btn:focus-visible{
-    color:var(--panel);
-    background:var(--paper);
-    border-color:var(--paper);
+  .link-pill svg{ flex-shrink:0; }
+  .link-pill .arrow{ font-size:12px; }
+  .link-pill:hover, .link-pill:focus-visible{
+    background:var(--signal);
+    border-color:var(--signal);
+    color:#fff;
   }
 
   /* ---------- flagship delivery sub-tickets ---------- */
@@ -442,12 +435,12 @@
   .subticket-name{
     font-family:'Space Grotesk', sans-serif;
     font-weight:600;
-    font-size:15px;
-    color:var(--paper);
+    font-size:15.5px;
+    color:var(--signal);
   }
   .subticket-name .arrow{
     font-size:12px;
-    color:var(--muted);
+    color:var(--signal);
     margin-left:4px;
   }
   .subticket-tag{
@@ -459,10 +452,25 @@
     white-space:nowrap;
   }
   .subticket-desc{
-    margin:0;
+    margin:0 0 12px;
     font-size:13.5px;
     color:#3A3D3F;
     line-height:1.55;
+  }
+  .subticket-cta{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    color:var(--signal);
+  }
+  .subticket-cta .arrow{ transition:transform .15s ease; }
+  @media (prefers-reduced-motion: no-preference){
+    .subticket:hover .subticket-cta .arrow{ transform:translate(2px,-2px); }
   }
 
   /* ---------- footer ticket ---------- */
@@ -489,6 +497,20 @@
   }
   .contact-grid a.c-val{ text-decoration:none; border-bottom:1px solid var(--line); }
   .contact-grid a.c-val:hover{ border-color:var(--signal); color:var(--signal); }
+
+  /* ---------- print (fallback export to PDF) ---------- */
+  @media print{
+    .board-nav{ display:none; }
+    body{ background:#FFFFFF; }
+    .ticket{
+      opacity:1 !important;
+      transform:none !important;
+      box-shadow:none;
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+    .status .dot{ animation:none !important; }
+  }
 
   /* ---------- responsive ---------- */
   @media (max-width:680px){
@@ -595,22 +617,22 @@
 
         <div class="linked-row">
           <span class="linked-label">Linked</span>
-          <a class="linked-site" href="https://paysenger.com/" target="_blank" rel="noopener">paysenger.com<span class="arrow">↗</span></a>
-          <span class="linked-icons">
-            <a class="icon-btn" href="https://play.google.com/store/apps/details?id=com.paysenger.androidapp" target="_blank" rel="noopener" aria-label="Get Paysenger on Google Play">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                <path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"></path>
-              </svg>
-            </a>
-            <a class="icon-btn" href="https://www.instagram.com/paysenger_com/" target="_blank" rel="noopener" aria-label="Paysenger on Instagram">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="5.5"></rect>
-                <circle cx="12" cy="12" r="3.6"></circle>
-                <circle cx="17.1" cy="6.9" r="0.6" fill="currentColor" stroke="none"></circle>
-              </svg>
-            </a>
-          </span>
+          <a class="link-pill" href="https://paysenger.com/" target="_blank" rel="noopener">paysenger.com<span class="arrow">↗</span></a>
+          <a class="link-pill" href="https://play.google.com/store/apps/details?id=com.paysenger.androidapp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"></path>
+            </svg>
+            Google Play<span class="arrow">↗</span>
+          </a>
+          <a class="link-pill" href="https://www.instagram.com/paysenger_com/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5.5"></rect>
+              <circle cx="12" cy="12" r="3.6"></circle>
+              <circle cx="17.1" cy="6.9" r="0.6" fill="currentColor" stroke="none"></circle>
+            </svg>
+            Instagram<span class="arrow">↗</span>
+          </a>
         </div>
 
         <div class="stats-row">
@@ -672,6 +694,7 @@
               <span class="subticket-tag">E-commerce · Magento 2</span>
             </div>
             <p class="subticket-desc">Owned delivery of the international storefront for this Italian manufacturer of tillage, seeding, and harvesting equipment — a Magento 2 platform spanning 20+ country storefronts and a multi-language catalog of hundreds of SKUs, tied to a dealer locator covering their global distribution network. The job was sequencing simultaneous market rollouts without engineering, merchandising, and localization stepping on each other.</p>
+            <span class="subticket-cta">Visit project<span class="arrow">↗</span></span>
           </a>
           <a class="subticket" href="https://kkmp.tech/" target="_blank" rel="noopener">
             <div class="subticket-top">
@@ -679,6 +702,7 @@
               <span class="subticket-tag">LegalTech · SaaS</span>
             </div>
             <p class="subticket-desc">Managed delivery for this legal-tech product suite: FileHunter, a fast document-search engine for network storage and eDiscovery, and FileMaster, an on-premise eDMS with versioning, granular access control, and Active Directory integration. The core trade-off to manage was a security-first, on-premise architecture against a roadmap that kept adding AI-assisted document workflows.</p>
+            <span class="subticket-cta">Visit project<span class="arrow">↗</span></span>
           </a>
         </div>
 
